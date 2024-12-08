@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="uz.pdp.repo.EventRepo" %>
+<%@ page import="uz.pdp.entity.Event" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,20 +24,34 @@
         </tr>
         </thead>
         <tbody>
+        <%
+            List<Event> events = EventRepo.getEvents();
+            for (Event event : events) {
+        %>
+
         <tr>
             <td>
-                <img src="<%=%>" alt="Event Image" class="img-fluid"
+                <img src="<%=event.getPhotoUrl()%>" alt="Event Image" class="img-fluid"
                      style="max-width: 150px; height: auto;">
             </td>
-            <td>${event.title}</td>
-            <td>${event.description}</td>
-            <td>${event.speaker}</td>
-            <td>${event.pay}</td>
-            <td>${event.count}</td>
-            <td>${event.startTime}</td>
-            <td>${event.endTime}</td>
+            <td><%=event.getTitle()%>
+            </td>
+            <td><%=event.getDescription()%>
+            </td>
+            <td><%=event.getSpeaker()%>
+            </td>
+            <td><%=event.getPay()%>
+            </td>
+            <td><%=event.getCount()%>
+            </td>
+            <td><%=event.getStartTime()%>
+            </td>
+            <td><%=event.getEndTime()%>
+            </td>
         </tr>
-        </c:forEach>
+        <%
+            }
+        %>
         </tbody>
     </table>
 </div>

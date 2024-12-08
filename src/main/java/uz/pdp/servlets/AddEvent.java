@@ -53,7 +53,7 @@ public class AddEvent extends HttpServlet {
             entityManager.getTransaction().begin();
             entityManager.persist(event);
             entityManager.getTransaction().commit();
-            resp.sendRedirect("/events");
+            resp.sendRedirect("/event.jsp");
         } catch (Exception e) {
             resp.getWriter().write("Error: " + e.getMessage());
         }
