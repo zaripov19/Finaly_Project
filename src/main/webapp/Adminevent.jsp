@@ -44,6 +44,8 @@
     <h1 class="text-center mb-4">Available Events</h1>
     <!-- Add Event Button -->
     <div class="text-center mt-4 mp-3">
+        <a href="Addevent.jsp" class="btn btn-success">Add Event</a>
+        <a href="Report.jsp" class="btn btn-success">Report</a>
         <a href="/login.jsp" class="btn btn-success">Login</a>
     </div>
 
@@ -88,7 +90,7 @@
                 <form action="/participate" method="post" id="form_<%=event.getId()%>">
                     <input type="hidden" name="eventId" value="<%=event.getId()%>">
                     <button type="submit" class="btn btn-take-part" id="btn_<%=event.getId()%>"
-                    >
+                            <%= event.getCount() == 0 ? "style='display:none'" : "" %>>
                         Take a part
                     </button>
                 </form>

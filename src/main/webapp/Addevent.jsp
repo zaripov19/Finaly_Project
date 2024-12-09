@@ -20,7 +20,7 @@
 <!-- Main Content -->
 <div class="container mt-5">
     <h1 class="text-center text-primary mb-4">Event Room Registration</h1>
-    <form action="/add" method="post" enctype="multipart/form-data" class="p-4 bg-white shadow rounded">
+    <form action="/addadmin" method="post" enctype="multipart/form-data" class="p-4 bg-white shadow rounded">
         <!-- Title -->
         <div class="mb-3">
             <label for="title" class="form-label">Event Title</label>
@@ -30,13 +30,15 @@
         <!-- Description -->
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter event description" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="3"
+                      placeholder="Enter event description" required></textarea>
         </div>
 
         <!-- Speaker -->
         <div class="mb-3">
             <label for="speaker" class="form-label">Speaker</label>
-            <input type="text" class="form-control" id="speaker" name="speaker" placeholder="Enter speaker name" required>
+            <input type="text" class="form-control" id="speaker" name="speaker" placeholder="Enter speaker name"
+                   required>
         </div>
 
         <!-- Payment -->
@@ -48,7 +50,8 @@
         <!-- Seat Count -->
         <div class="mb-3">
             <label for="count" class="form-label">Number of Seats</label>
-            <input type="number" class="form-control" id="count" name="count" placeholder="Enter number of seats" required>
+            <input type="number" class="form-control" id="count" name="count" placeholder="Enter number of seats"
+                   required>
         </div>
 
         <!-- Start Time -->

@@ -2,6 +2,8 @@ package uz.pdp.servlets;
 
 import jakarta.persistence.EntityManager;
 import uz.pdp.entity.Event;
+import uz.pdp.entity.UserRole;
+import uz.pdp.entity.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -53,7 +55,7 @@ public class AddEvent extends HttpServlet {
             entityManager.getTransaction().begin();
             entityManager.persist(event);
             entityManager.getTransaction().commit();
-            resp.sendRedirect("/event.jsp");
+            resp.sendRedirect("/Adminevent.jsp");
         } catch (Exception e) {
             resp.getWriter().write("Error: " + e.getMessage());
         }
