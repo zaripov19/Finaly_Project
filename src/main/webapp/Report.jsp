@@ -40,6 +40,8 @@
         <tr>
             <th>Event Image</th>
             <th>Event Title</th>
+            <th>Event Description</th>
+            <th>Event Speaker</th>
             <th>Total Seats</th>
             <th>Total Pay (USD)</th>
             <th>Event Start</th>
@@ -57,6 +59,10 @@
         <tr>
             <td><img src="<%= event.getPhotoUrl() %>" alt="Event Image" class="event-image"></td>
             <td><%= event.getTitle() %>
+            </td>
+            <td><%= event.getDescription() %>
+            </td>
+            <td><%= event.getSpeaker() %>
             </td>
             <td><%= event.getCount() %>
             </td>
@@ -78,7 +84,7 @@
 
     <!-- Button to return to the Event List page -->
     <div class="text-center mt-4">
-        <a href="event.jsp" class="btn btn-back">Back to Events</a>
+        <a href="Adminevent.jsp" class="btn btn-back">Back to Events</a>
     </div>
 </div>
 

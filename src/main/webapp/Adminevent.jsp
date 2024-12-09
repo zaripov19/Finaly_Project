@@ -87,12 +87,9 @@
             <td><%=event.getEndTime()%>
             </td>
             <td>
-                <form action="/participate" method="post" id="form_<%=event.getId()%>">
+                <form action="/admin/delete" method="post" id="form_<%=event.getId()%>">
                     <input type="hidden" name="eventId" value="<%=event.getId()%>">
-                    <button type="submit" class="btn btn-take-part" id="btn_<%=event.getId()%>"
-                            <%= event.getCount() == 0 ? "style='display:none'" : "" %>>
-                        Take a part
-                    </button>
+                    <button type="submit" class="btn btn-take-part">Delete</button>
                 </form>
             </td>
         </tr>
