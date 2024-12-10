@@ -19,7 +19,6 @@ public class MyListener implements ServletContextListener {
         EMF = Persistence.createEntityManagerFactory("finaly");
 
         try (EntityManager entityManager = EMF.createEntityManager()) {
-
             List<Roles> fromRoles = entityManager.createQuery("from Roles", Roles.class).getResultList();
             if (fromRoles.isEmpty()) {
                 entityManager.getTransaction().begin();
@@ -30,9 +29,14 @@ public class MyListener implements ServletContextListener {
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error initializing roles", e);
         }
+    }
 
-
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        if (EMF != null && EMF.isOpen()) {
+            EMF.close();
+        }
     }
 }

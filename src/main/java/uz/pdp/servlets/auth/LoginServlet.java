@@ -16,22 +16,28 @@ import static uz.pdp.config.MyListener.EMF;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try (EntityManager entityManager = EMF.createEntityManager()) {
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
-            Users foundUser = entityManager.createQuery("from Users where email = :email and password = :password", Users.class)
-                    .setParameter("email", email)
-                    .setParameter("password", password)
-                    .getSingleResult();
-            if (foundUser == null) {
-                resp.sendRedirect("/login.jsp");
+        try (EntityManager entityManager = EMF.createEntityManager()) {
+            // Email va parol bilan foydalanuvchini izlash
+            Users foundUser = null;
+            try {
+                foundUser = entityManager.createQuery("from Users where email = :email", Users.class)
+                        .setParameter("email", email)
+                        .getSingleResult();
+            } catch (Exception e) {
+                resp.sendRedirect("/login.jsp?error=invalid-credentials");
                 return;
-            } else {
+            }
+
+            // Parolni tekshirish (hashingni qo'llash kerak)
+            if (foundUser != null && foundUser.getPassword().equals(password)) {  // Bu yerda parolni tekshirish xavfsiz usulda bo'lishi kerak
                 req.getSession().setAttribute("currentUser", foundUser);
                 resp.sendRedirect("/event.jsp");
+            } else {
+                resp.sendRedirect("/login.jsp?error=invalid-credentials");
             }
         }
-
     }
 }

@@ -2,8 +2,6 @@ package uz.pdp.servlets;
 
 import jakarta.persistence.EntityManager;
 import uz.pdp.entity.Event;
-import uz.pdp.entity.UserRole;
-import uz.pdp.entity.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 import static uz.pdp.config.MyListener.EMF;
 
 @WebServlet("/add")
-@MultipartConfig // Fayl yuklashni qo'llab-quvvatlash uchun
+@MultipartConfig(maxFileSize = 10485760, maxRequestSize = 20971520) // 10MB fayl va 20MB umumiy so'rov hajmi
 public class AddEvent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,6 +37,11 @@ public class AddEvent extends HttpServlet {
 
             // Fayl yuklash va saqlash
             Part filePart = req.getPart("image");
+            if (filePart == null || filePart.getSize() == 0) {
+                resp.getWriter().write("Error: Image file is missing.");
+                return;
+            }
+
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             String uploadDir = getServletContext().getRealPath("") + "uploads";
             File uploadDirFile = new File(uploadDir);
@@ -56,6 +59,8 @@ public class AddEvent extends HttpServlet {
             entityManager.persist(event);
             entityManager.getTransaction().commit();
             resp.sendRedirect("/Adminevent.jsp");
+        } catch (NumberFormatException e) {
+            resp.getWriter().write("Error: Invalid number format for 'pay' or 'count'.");
         } catch (Exception e) {
             resp.getWriter().write("Error: " + e.getMessage());
         }

@@ -17,19 +17,39 @@ public class EventParticipationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Eventni ID asosida olish
+        // Event ID-ni so'rovdan olish
         String eventIdStr = req.getParameter("eventId");
         Long eventId = Long.valueOf(eventIdStr);
 
         try (EntityManager entityManager = EMF.createEntityManager()) {
-            // Eventni topish
+            // Eventni ID bo'yicha qidirish
             Event event = entityManager.find(Event.class, eventId);
-            entityManager.getTransaction().begin();
-            int a = (int) (event.getCount() - eventId);
-            event.setCount(a);
-            entityManager.persist(event);
-            entityManager.getTransaction().commit();
-            resp.sendRedirect("/event.jsp");
+
+            if (event != null) {
+                // Transaction boshlash
+                entityManager.getTransaction().begin();
+
+                // O'rindiqni 1 taga kamaytirish (bir ishtirokchi qo'shilyapti)
+                int newCount = event.getCount() - 1;
+
+                // Yangilangan count qiymatini saqlash
+                event.setCount(newCount);
+
+                // Yangilangan event ob'ektini bazaga saqlash
+                entityManager.merge(event);
+
+                // Transactionni tugatish
+                entityManager.getTransaction().commit();
+
+                // Event sahifasiga qayta yo'naltirish
+                resp.sendRedirect("/event.jsp");
+            } else {
+                // Agar event topilmasa, xatolik qaytarish
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Event topilmadi.");
+            }
+        } catch (Exception e) {
+            // Xatolik yuzaga kelsa, transactionni orqaga qaytarish va xato haqida xabar yuborish
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "So'rovni ishlashda xatolik yuz berdi.");
         }
     }
 }

@@ -14,8 +14,8 @@ import uz.pdp.entity.abs.BaseEntity;
 public class UserRole extends BaseEntity {
 
     @ManyToOne
-    private Roles role;  // "roles" deb emas, "role" deb nomlash yaxshiroq.
+    private Roles roles;  // "roles" deb emas, "role" deb nomlash yaxshiroq.
 
     @ManyToOne
-    private Users user;  // "users" deb emas, "user" deb nomlash yaxshiroq.
+    private Users users;  // "users" deb emas, "user" deb nomlash yaxshiroq.
 }
