@@ -44,16 +44,13 @@ public class Filter extends HttpFilter {
             chain.doFilter(req, res);
             return;
         }
-
-        // Sessiyani olish (sessiya yaratmasdan)
         HttpSession session = req.getSession();
-        Object object = session.getAttribute("cuurentUser");
+        Object object = session.getAttribute("currentUser");
         if (object == null) {
             res.sendRedirect("/login.jsp");
             return;
         } else {
             Users currentUser = (Users) object;
-            // Avtorizatsiya tekshirish
             if (adminPaths.contains(req.getRequestURI()) && currentUser.hasRole("ADMIN")) {
                 chain.doFilter(req, res);
             } else if (userPaths.contains(req.getRequestURI()) && currentUser.hasRole("USER")) {

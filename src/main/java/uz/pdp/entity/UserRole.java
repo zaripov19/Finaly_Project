@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uz.pdp.entity.abs.BaseEntity;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,9 +14,8 @@ import uz.pdp.entity.abs.BaseEntity;
 public class UserRole extends BaseEntity {
 
     @ManyToOne
-    private Roles roles;
+    private Roles role;  // "roles" deb emas, "role" deb nomlash yaxshiroq.
+
     @ManyToOne
-    private Users users;
-
-
+    private Users user;  // "users" deb emas, "user" deb nomlash yaxshiroq.
 }
