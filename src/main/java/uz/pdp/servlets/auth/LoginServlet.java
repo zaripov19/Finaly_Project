@@ -1,6 +1,7 @@
 package uz.pdp.servlets.auth;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import uz.pdp.entity.Users;
 
 import javax.servlet.ServletException;
@@ -16,28 +17,35 @@ import static uz.pdp.config.MyListener.EMF;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-
         try (EntityManager entityManager = EMF.createEntityManager()) {
-            // Email va parol bilan foydalanuvchini izlash
+            String email = req.getParameter("email");
+            String password = req.getParameter("password");
+
             Users foundUser = null;
             try {
-                foundUser = entityManager.createQuery("from Users where email = :email", Users.class)
+                foundUser = entityManager.createQuery("from Users where email = :email and password = :password", Users.class)
                         .setParameter("email", email)
+                        .setParameter("password", password)
                         .getSingleResult();
-            } catch (Exception e) {
-                resp.sendRedirect("/login.jsp?error=invalid-credentials");
-                return;
+            } catch (NoResultException e) {
+                // Agar foydalanuvchi topilmasa, uni null qilib qo'yish
+                foundUser = null;
             }
 
-            // Parolni tekshirish (hashingni qo'llash kerak)
-            if (foundUser != null && foundUser.getPassword().equals(password)) {  // Bu yerda parolni tekshirish xavfsiz usulda bo'lishi kerak
-                req.getSession().setAttribute("currentUser", foundUser);
-                resp.sendRedirect("/event.jsp");
+            if (foundUser == null) {
+                resp.sendRedirect("/login.jsp");
             } else {
-                resp.sendRedirect("/login.jsp?error=invalid-credentials");
+                req.getSession().setAttribute("currentUser", foundUser);
+                if (foundUser.hasRole("ADMIN")) {
+                    resp.sendRedirect("Adminevent.jsp");
+                } else if (foundUser.hasRole("USER")) {
+                    resp.sendRedirect("/event.jsp");
+                } else {
+                    resp.sendRedirect("/login.jsp");
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

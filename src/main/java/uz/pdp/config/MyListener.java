@@ -19,24 +19,17 @@ public class MyListener implements ServletContextListener {
         EMF = Persistence.createEntityManagerFactory("finaly");
 
         try (EntityManager entityManager = EMF.createEntityManager()) {
-            List<Roles> fromRoles = entityManager.createQuery("from Roles", Roles.class).getResultList();
-            if (fromRoles.isEmpty()) {
+            List<Roles> roles = entityManager.createQuery("from Roles", Roles.class).getResultList();
+            if (roles.isEmpty()) {
                 entityManager.getTransaction().begin();
-                Roles roles1 = new Roles("ADMIN");
-                Roles roles2 = new Roles("USER");
-                entityManager.persist(roles1);
-                entityManager.persist(roles2);
+                Roles adminRole = new Roles("ADMIN");
+                Roles userRole = new Roles("USER");
+                entityManager.persist(adminRole);
+                entityManager.persist(userRole);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error initializing roles", e);
-        }
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        if (EMF != null && EMF.isOpen()) {
-            EMF.close();
+            throw new RuntimeException(e);
         }
     }
 }

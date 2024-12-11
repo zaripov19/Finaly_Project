@@ -14,8 +14,8 @@ public class EventRepo {
             return entityManager.createQuery("from Event ", Event.class)
                     .getResultList();
         } catch (Exception e) {
-            e.printStackTrace(); // Xatolik haqida ma'lumotni konsolga chiqarish
-            return Collections.emptyList(); // Bo'sh ro'yxatni qaytarish
+            e.printStackTrace();
+            return Collections.emptyList();
         }
     }
 }

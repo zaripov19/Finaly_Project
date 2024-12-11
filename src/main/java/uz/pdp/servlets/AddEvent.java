@@ -24,7 +24,7 @@ public class AddEvent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (EntityManager entityManager = EMF.createEntityManager()) {
-            // Ma'lumotlarni formadan olish
+
             String title = req.getParameter("title");
             String description = req.getParameter("description");
             String speaker = req.getParameter("speaker");
@@ -35,7 +35,6 @@ public class AddEvent extends HttpServlet {
             LocalDateTime startTime = LocalDateTime.parse(req.getParameter("startTime"), formatter);
             LocalDateTime endTime = LocalDateTime.parse(req.getParameter("endTime"), formatter);
 
-            // Fayl yuklash va saqlash
             Part filePart = req.getPart("image");
             if (filePart == null || filePart.getSize() == 0) {
                 resp.getWriter().write("Error: Image file is missing.");
@@ -46,15 +45,13 @@ public class AddEvent extends HttpServlet {
             String uploadDir = getServletContext().getRealPath("") + "uploads";
             File uploadDirFile = new File(uploadDir);
             if (!uploadDirFile.exists()) {
-                uploadDirFile.mkdir(); // Papkani yaratish
+                uploadDirFile.mkdir();
             }
             String photoUrl = "uploads/" + fileName;
             filePart.write(uploadDir + File.separator + fileName);
 
-            // Event obyektini yaratish
             Event event = new Event(title, description, speaker, pay, count, startTime, endTime, photoUrl);
 
-            // Ma'lumotlarni saqlash
             entityManager.getTransaction().begin();
             entityManager.persist(event);
             entityManager.getTransaction().commit();

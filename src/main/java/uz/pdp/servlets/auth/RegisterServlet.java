@@ -28,53 +28,35 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         String passwordRepeat = req.getParameter("passwordRepeat");
 
-        // Parollarni tekshirish
-        if (!password.equals(passwordRepeat)) {
-            req.setAttribute("errorMessage", "Parollar bir xil bo'lishi kerak");
-            req.getRequestDispatcher("/register.jsp").forward(req, resp);
-            return;
-        }
+        if (password.equals(passwordRepeat)) {
+            Users user = new Users(firstName,
+                    lastName,
+                    email,
+                    password);
+            try (EntityManager entityManager = EMF.createEntityManager()) {
 
-        // Email orqali foydalanuvchi mavjudligini tekshirish
-        try (EntityManager entityManager = EMF.createEntityManager()) {
-            Users existingUser = entityManager.createQuery("FROM Users WHERE email = :email", Users.class)
-                    .setParameter("email", email)
-                    .getResultList().stream().findFirst().orElse(null);
+                Map<String, String> map = new HashMap<>();
+                Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+                Set<ConstraintViolation<Users>> validate = validator.validate(user);
+                for (ConstraintViolation<Users> validation : validate) {
+                    map.put(validation.getPropertyPath().toString(), validation.getMessage());
+                }
+                if (!map.isEmpty()) {
+                    req.setAttribute("errors", map);
+                    req.getRequestDispatcher("/register.jsp").forward(req, resp);
+                    return;
+                }
 
-            if (existingUser != null) {
-                req.setAttribute("errorMessage", "Bu email manzil bilan foydalanuvchi mavjud");
-                req.getRequestDispatcher("/register.jsp").forward(req, resp);
-                return;
+                entityManager.getTransaction().begin();
+                entityManager.persist(user);
+                entityManager.getTransaction().commit();
+
+                resp.sendRedirect("/login.jsp");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-
-
-            Users user = new Users(firstName, lastName, email, password);
-
-
-            Map<String, String> map = new HashMap<>();
-            Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-            Set<ConstraintViolation<Users>> validate = validator.validate(user);
-            for (ConstraintViolation<Users> validation : validate) {
-                map.put(validation.getPropertyPath().toString(), validation.getMessage());
-            }
-
-            if (!validate.isEmpty()) {
-                req.setAttribute("errors", map);
-                req.getRequestDispatcher("/register.jsp").forward(req, resp);
-                return;
-            }
-
-            // Foydalanuvchini saqlash
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-
-            // Login sahifasiga yo'naltirish
-            resp.sendRedirect("/login.jsp");
-
-        } catch (Exception e) {
-            req.setAttribute("errorMessage", "Ro'yxatdan o'tishda xatolik yuz berdi: " + e.getMessage());
-            req.getRequestDispatcher("/register.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect("register.jsp");
         }
     }
 }

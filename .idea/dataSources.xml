@@ -9,6 +9,7 @@
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="EXTERNAL_DATA_PATH" value="C:\Users\zarip\OneDrive\Desktop\lessons\G-46 (7-modul)\Lesson_11\FInaly_Project\external-data-finaly_localhost.xml" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>

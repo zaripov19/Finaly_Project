@@ -1,6 +1,7 @@
-package uz.pdp.repo;
+package uz.pdp.servlets;
 
 import uz.pdp.entity.Event;
+import uz.pdp.repo.EventRepo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,21 +16,18 @@ public class ReportServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Tadbirlar ro'yxatini olish
+
         List<Event> events = EventRepo.getEvents();
 
-        // Hisobotni yaratish
         double totalIncome = 0;
         for (Event event : events) {
-            int seatsTaken = event.getCount();  // O'rindiqlarni hisoblash
-            totalIncome += seatsTaken * event.getPay();  // Umumiy to'lovni hisoblash
+            int seatsTaken = event.getCount();
+            totalIncome += seatsTaken * event.getPay();
         }
 
-        // Hisobotni requestga yuborish
         request.setAttribute("events", events);
         request.setAttribute("totalIncome", totalIncome);
 
-        // JSP sahifasini ko'rsatish
         request.getRequestDispatcher("/Report.jsp").forward(request, response);
     }
 }

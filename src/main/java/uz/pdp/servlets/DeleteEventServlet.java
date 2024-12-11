@@ -20,19 +20,19 @@ public class DeleteEventServlet extends HttpServlet {
 
         if (id != null && !id.isEmpty()) {
             try (EntityManager entityManager = EMF.createEntityManager()) {
-                Long eventId = Long.parseLong(id); // Integer o'rniga Long.parseLong() ishlatish kerak
+                Long eventId = Long.parseLong(id);
                 Event event = entityManager.find(Event.class, eventId);
 
                 if (event != null) {
                     entityManager.getTransaction().begin();
-                    entityManager.remove(event); // Eventni olib tashlash
+                    entityManager.remove(event);
                     entityManager.getTransaction().commit();
-                    resp.sendRedirect("/Adminevent.jsp"); // Eventni o'chirgandan keyin sahifaga qaytish
+                    resp.sendRedirect("/Adminevent.jsp");
                 } else {
-                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Event topilmadi."); // Agar event topilmasa
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Event topilmadi.");
                 }
             } catch (NumberFormatException e) {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Event ID noto'g'ri formatda."); // ID noto'g'ri formatda bo'lsa
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Event ID noto'g'ri formatda.");
             } catch (Exception e) {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Xatolik yuz berdi.");
             }
