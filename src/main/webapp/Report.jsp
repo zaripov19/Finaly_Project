@@ -93,7 +93,7 @@
 <body>
 
 <div class="container">
-    <h1 class="text-center mb-4">Event Report</h1>
+    <h1 class="text-center mb-4">Pdp Academy Event Room</h1>
 
     <table class="table table-striped table-bordered">
         <thead>

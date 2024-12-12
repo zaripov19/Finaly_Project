@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDP ACADEMY EVENT</title>
+    <title>Pdp Academy Event Room </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <style>
         body {
@@ -82,7 +82,7 @@
 <body>
 
 <div class="container">
-    <h1 class="text-center mb-4">PDP ACADEMY</h1>
+    <h1 class="text-center mb-4">Pdp Academy Event Room </h1>
 
     <div class="btn-container">
         <a href="Addevent.jsp" class="btn btn-success me-2">Add Event</a>

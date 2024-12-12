@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Room Registration</title>
+    <title> Pdp Academy Event Room Registration</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -120,12 +120,12 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Event Room</a>
+        <a class="navbar-brand" href="#"> Pdp Academy Event Room</a>
     </div>
 </nav>
 
 <div class="container">
-    <h1 class="text-center"> PDP Event Room Registration</h1>
+    <h1 class="text-center"> PDP Academy Event Room Registration</h1>
     <form action="/add" method="post" enctype="multipart/form-data" class="form-container">
         <div class="mb-4">
             <label for="title" class="form-label">Event Title</label>
@@ -134,12 +134,14 @@
 
         <div class="mb-4">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter event description" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="4"
+                      placeholder="Enter event description" required></textarea>
         </div>
 
         <div class="mb-4">
             <label for="speaker" class="form-label">Speaker</label>
-            <input type="text" class="form-control" id="speaker" name="speaker" placeholder="Enter speaker name" required>
+            <input type="text" class="form-control" id="speaker" name="speaker" placeholder="Enter speaker name"
+                   required>
         </div>
 
         <div class="mb-4">
@@ -149,7 +151,8 @@
 
         <div class="mb-4">
             <label for="count" class="form-label">Number of Seats</label>
-            <input type="number" class="form-control" id="count" name="count" placeholder="Enter number of seats" required>
+            <input type="number" class="form-control" id="count" name="count" placeholder="Enter number of seats"
+                   required>
         </div>
 
         <div class="mb-4">
@@ -178,7 +181,7 @@
 </div>
 
 <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
+    document.querySelector("form").addEventListener("submit", function (event) {
         var startTime = document.getElementById("startTime").value;
         var endTime = document.getElementById("endTime").value;
 
