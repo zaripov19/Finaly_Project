@@ -43,7 +43,6 @@ public class Filter extends HttpFilter {
             return;
         }
 
-
         HttpSession session = req.getSession();
         Object object = session.getAttribute("currentUser");
 
@@ -54,6 +53,7 @@ public class Filter extends HttpFilter {
             Users currentUser = (Users) object;
             if (adminPaths.contains(req.getRequestURI()) && currentUser.hasRole("ADMIN")) {
                 chain.doFilter(req, res);
+                return;
             } else if (userPaths.contains(req.getRequestURI()) && currentUser.hasRole("USER")) {
                 chain.doFilter(req, res);
             } else {

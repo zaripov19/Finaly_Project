@@ -38,23 +38,19 @@ public class Users extends BaseEntity {
 
     public boolean hasRole(String roleName) {
         try (EntityManager entityManager = EMF.createEntityManager()) {
-            // Native Query
-            String sql = """
-                        SELECT r.name
-                        FROM users u
-                        JOIN userrole ur ON ur.users_id = u.id
-                        JOIN roles r ON r.id = ur.roles_id
-                        WHERE u.id = :userId
-                    """;
-
-            List<String> roleNames = entityManager.createNativeQuery(sql, String.class)
+            List<String> roleNames = (List<String>) entityManager.createNativeQuery("""
+                                SELECT r.name
+                                FROM users u
+                                JOIN userrole ur ON ur.users_id = u.id
+                                JOIN roles r ON r.id = ur.roles_id
+                                WHERE u.id = :userId
+                            """, String.class)
                     .setParameter("userId", this.getId())
                     .getResultList();
 
             return roleNames.contains(roleName);
         } catch (Exception e) {
-            throw new RuntimeException("Error checking role: " + roleName, e);
+            throw new RuntimeException(e);
         }
     }
-
 }

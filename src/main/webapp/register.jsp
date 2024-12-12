@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -26,7 +25,6 @@
         </div>
         <div class="card-body">
             <form action="/auth/register" method="post">
-                <!-- First Name -->
                 <div class="mb-3">
                     <label for="firstname" class="form-label">First Name</label>
                     <input name="firstname" type="text" class="form-control <%= errors.get("firstName") != null ? "is-invalid" : "" %>" id="firstname" placeholder="Enter your first name">
@@ -34,7 +32,6 @@
                     <span class="invalid-feedback d-block"><%= errors.get("firstName") %></span>
                     <% } %>
                 </div>
-                <!-- Last Name -->
                 <div class="mb-3">
                     <label for="lastname" class="form-label">Last Name</label>
                     <input name="lastname" type="text" class="form-control <%= errors.get("lastName") != null ? "is-invalid" : "" %>" id="lastname" placeholder="Enter your last name">
@@ -42,7 +39,6 @@
                     <span class="invalid-feedback d-block"><%= errors.get("lastName") %></span>
                     <% } %>
                 </div>
-                <!-- Email -->
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input name="email" type="text" class="form-control <%= errors.get("email") != null ? "is-invalid" : "" %>" id="email" placeholder="Enter your email">
@@ -50,7 +46,6 @@
                     <span class="invalid-feedback d-block"><%= errors.get("email") %></span>
                     <% } %>
                 </div>
-                <!-- Password -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input name="password" type="password" class="form-control <%= errors.get("password") != null ? "is-invalid" : "" %>" id="password" placeholder="Enter your password">
@@ -58,7 +53,6 @@
                     <span class="invalid-feedback d-block"><%= errors.get("password") %></span>
                     <% } %>
                 </div>
-                <!-- Password Repeat -->
                 <div class="mb-3">
                     <label for="passwordRepeat" class="form-label">Confirm Password</label>
                     <input name="passwordRepeat" type="password" class="form-control <%= errors.get("passwordRepeat") != null ? "is-invalid" : "" %>" id="passwordRepeat" placeholder="Repeat your password">
@@ -66,14 +60,12 @@
                     <span class="invalid-feedback d-block"><%= errors.get("passwordRepeat") %></span>
                     <% } %>
                 </div>
-                <!-- Sign Up Button -->
                 <button type="submit" class="btn btn-success w-100">Sign Up</button>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

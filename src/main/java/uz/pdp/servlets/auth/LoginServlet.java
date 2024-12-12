@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet {
                         .setParameter("password", password)
                         .getSingleResult();
             } catch (NoResultException e) {
-                // Agar foydalanuvchi topilmasa, uni null qilib qo'yish
                 foundUser = null;
             }
 
@@ -38,6 +37,7 @@ public class LoginServlet extends HttpServlet {
                 req.getSession().setAttribute("currentUser", foundUser);
                 if (foundUser.hasRole("ADMIN")) {
                     resp.sendRedirect("Adminevent.jsp");
+
                 } else if (foundUser.hasRole("USER")) {
                     resp.sendRedirect("/event.jsp");
                 } else {
