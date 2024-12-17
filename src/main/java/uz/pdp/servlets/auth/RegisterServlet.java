@@ -34,7 +34,6 @@ public class RegisterServlet extends HttpServlet {
                     email,
                     password);
             try (EntityManager entityManager = EMF.createEntityManager()) {
-
                 Map<String, String> map = new HashMap<>();
                 Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
                 Set<ConstraintViolation<Users>> validate = validator.validate(user);
@@ -46,11 +45,9 @@ public class RegisterServlet extends HttpServlet {
                     req.getRequestDispatcher("/register.jsp").forward(req, resp);
                     return;
                 }
-
                 entityManager.getTransaction().begin();
                 entityManager.persist(user);
                 entityManager.getTransaction().commit();
-
                 resp.sendRedirect("/login.jsp");
             } catch (Exception e) {
                 throw new RuntimeException(e);

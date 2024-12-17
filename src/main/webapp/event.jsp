@@ -11,10 +11,9 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">PDP ACADEMY</a>
+        <a class="navbar-brand" href="#">Pdp Academy Event Room</a>
         <div class="d-flex">
             <a href="/login.jsp" class="btn btn-light ms-2">Login</a>
         </div>
@@ -22,12 +21,10 @@
 </nav>
 
 <div class="container my-5">
-    <h1 class="text-center mb-4">Upcoming Events</h1>
+    <h1 class="text-center mb-4">Pdp Academy Event Room</h1>
 
-    <!-- Success or Error Message -->
     <div id="alert-placeholder"></div>
 
-    <!-- Table for Events -->
     <table class="table table-striped">
         <thead>
         <tr>
@@ -76,7 +73,7 @@
     </table>
 </div>
 
-<!-- Bootstrap JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

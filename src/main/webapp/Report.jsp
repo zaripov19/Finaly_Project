@@ -93,7 +93,7 @@
 <body>
 
 <div class="container">
-    <h1 class="text-center mb-4">Event Report</h1>
+    <h1 class="text-center mb-4">Pdp Academy Event Room</h1>
 
     <table class="table table-striped table-bordered">
         <thead>
@@ -110,38 +110,42 @@
         </thead>
         <tbody>
         <%
-            double totalBalance = 0; // Umumiy balansni saqlash uchun o'zgaruvchi
+            double totalBalance = 0;
             List<Event> events = EventRepo.getEvents();
             for (Event event : events) {
-                double totalPay = event.getCount() * event.getPay();  // Barcha o'rindiqlar bo'yicha umumiy to'lov
-                totalBalance += totalPay; // Umumiy balansni yangilash
+                double totalPay = event.getCount() * event.getPay();
+                totalBalance += totalPay;
         %>
         <tr>
             <td><img src="<%= event.getPhotoUrl() %>" alt="Event Image" class="event-image"></td>
-            <td><%= event.getTitle() %></td>
-            <td><%= event.getDescription() %></td>
-            <td><%= event.getSpeaker() %></td>
-            <td><%= event.getCount() %></td>
-            <td><%= totalPay %></td>
-            <td><%= event.getStartTime() %></td>
-            <td><%= event.getEndTime() %></td>
+            <td><%= event.getTitle() %>
+            </td>
+            <td><%= event.getDescription() %>
+            </td>
+            <td><%= event.getSpeaker() %>
+            </td>
+            <td><%= event.getCount() %>
+            </td>
+            <td><%= totalPay %>
+            </td>
+            <td><%= event.getStartTime() %>
+            </td>
+            <td><%= event.getEndTime() %>
+            </td>
         </tr>
         <% } %>
         </tbody>
     </table>
 
-    <!-- Total Balance -->
     <div class="total-balance text-center">
         <p>Total Balance: <%= totalBalance %> USD</p>
     </div>
 
-    <!-- Button to return to the Event List page -->
     <div class="text-center mt-4">
         <a href="Adminevent.jsp" class="btn-back">Back to Events</a>
     </div>
 </div>
 
-<!-- Footer -->
 <div class="footer">
     <p>&copy; 2024 Event Room. All Rights Reserved. | <a href="#">Privacy Policy</a></p>
 </div>

@@ -21,23 +21,19 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
 
-            Users foundUser = null;
-            try {
-                foundUser = entityManager.createQuery("from Users where email = :email and password = :password", Users.class)
-                        .setParameter("email", email)
-                        .setParameter("password", password)
-                        .getSingleResult();
-            } catch (NoResultException e) {
-                // Agar foydalanuvchi topilmasa, uni null qilib qo'yish
-                foundUser = null;
-            }
+            Users foundUser = entityManager.createQuery("from Users where email = :email and password = :password", Users.class)
+                    .setParameter("email", email)
+                    .setParameter("password", password)
+                    .getSingleResult();
 
             if (foundUser == null) {
                 resp.sendRedirect("/login.jsp");
             } else {
                 req.getSession().setAttribute("currentUser", foundUser);
                 if (foundUser.hasRole("ADMIN")) {
+
                     resp.sendRedirect("Adminevent.jsp");
+
                 } else if (foundUser.hasRole("USER")) {
                     resp.sendRedirect("/event.jsp");
                 } else {
