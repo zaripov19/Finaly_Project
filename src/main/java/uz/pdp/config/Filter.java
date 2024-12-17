@@ -13,15 +13,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebFilter()
+@WebFilter("/*")
 public class Filter extends HttpFilter {
-
 
     private final List<String> openPaths = new ArrayList<>(List.of(
             "/login.jsp",
             "/auth/login",
             "/register.jsp",
-            "/auth/register"));
+            "/auth/register"
+    ));
 
     private final List<String> adminPaths = new ArrayList<>(List.of(
             "/Adminevent.jsp",
@@ -31,36 +31,46 @@ public class Filter extends HttpFilter {
             "/admin/delete",
             "/add"
     ));
+
     private final List<String> userPaths = new ArrayList<>(List.of(
             "/event.jsp",
-            "/participate"));
+            "/participate"
+    ));
 
     @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
 
-        if (openPaths.contains(req.getRequestURI())) {
+        String path = req.getServletPath(); // getRequestURI o'rniga getServletPath
+        HttpSession session = req.getSession(false);
+
+
+        if (openPaths.contains(path)) {
             chain.doFilter(req, res);
             return;
         }
 
-        HttpSession session = req.getSession();
-        Object object = session.getAttribute("currentUser");
 
-        if (object == null) {
+        if (session == null || session.getAttribute("currentUser") == null) {
             res.sendRedirect("/login.jsp");
             return;
-        } else {
-            Users currentUser = (Users) object;
-            if (adminPaths.contains(req.getRequestURI()) && currentUser.hasRole("ADMIN")) {
-                chain.doFilter(req, res);
-                return;
-            } else if (userPaths.contains(req.getRequestURI()) && currentUser.hasRole("USER")) {
-                chain.doFilter(req, res);
-            } else {
-                res.sendRedirect("/login.jsp");
-                return;
-            }
         }
-        chain.doFilter(req, res);
+
+
+        Users currentUser = (Users) session.getAttribute("currentUser");
+
+
+        if (adminPaths.contains(path) && currentUser.hasRole("ADMIN")) {
+            chain.doFilter(req, res);
+            return;
+        }
+
+
+        if (userPaths.contains(path) && currentUser.hasRole("USER")) {
+            chain.doFilter(req, res);
+            return;
+        }
+
+        res.sendRedirect("/login.jsp");
     }
 }
